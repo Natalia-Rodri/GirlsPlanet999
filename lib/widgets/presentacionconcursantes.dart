@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 
 class ContenedorConcursantes extends StatelessWidget {
 
-  const ContenedorConcursantes(@required this.nombre,@required this.rutaImagen);
+  const ContenedorConcursantes(this.nombre,this.rutaImagen);
 
   final String nombre;
   final String rutaImagen;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width/3.5,
-      color: Colors.black38,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.black38, ),
+      padding: EdgeInsets.only(top: 7),
+      width: MediaQuery.of(context).size.width/3.3,
       child: Column(
       children: [
-        CircleAvatar(backgroundColor: Colors.transparent,child: ClipOval(child: Image.network(rutaImagen)), radius: 70),
-        FittedBox(fit: BoxFit.fitWidth, child: Text(nombre)),])
+        ClipRect(child: ClipOval(child:Image.network(rutaImagen, height: 160,),)),
+        SizedBox(height: 7,),
+        Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white54, ),
+          width: MediaQuery.of(context).size.width/3.3,
+          child: Center(child: Text(nombre))
+        ),
+        ])
     );
   }
 }

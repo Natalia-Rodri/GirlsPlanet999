@@ -17,63 +17,73 @@ class PaginaVotacion extends StatelessWidget {
           title: Text('Hola ' + Provider.of<Usuario>(context, listen: false).nombre),
           backgroundColor: Colors.purple,
         ),
-        body: Center(child: ListView(
-          children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/girlsplanetfondo.jpg"),
-                fit: BoxFit.cover,
-              )
+        body: Center(child: Expanded(
+          child: ListView(
+            children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/girlsplanetfondo.jpg"),
+                  fit: BoxFit.cover,
+                )
+              ),
+              height: 180,
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                alignment: const Alignment(0, 0.2),
+                color: Colors.black45, 
+                child: 
+                  Text("Elige hasta nueve concursantes \n independientemente de su nacionalidad", 
+                  style: GoogleFonts.dancingScript(fontSize: 18,color: Colors.white))),
             ),
-            height: 180,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              alignment: const Alignment(0, 0.2),
-              color: Colors.black45, 
-              child: 
-                Text("Elige hasta nueve concursantes \n independientemente de su nacionalidad", 
-                style: GoogleFonts.dancingScript(fontSize: 18,color: Colors.white))),
-          ),
-          Container(
-            color: Colors.white,
-            height: 2,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Container(
-            alignment: Alignment.center,
-            color: Colors.purple,
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            child: Text("Concursantes coreanas \n", style: GoogleFonts.dancingScript(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
-          Container(
-            color: Colors.white,
-            height: 2,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Container(
-            alignment: Alignment.center,
-            color: Colors.purple,
-            height: 500,
-            width: MediaQuery.of(context).size.width,
-            child: GridView.count(
-              crossAxisCount: 3,
-              children: 
-                List.generate(33, (index) {
-                    return Center(
-                    child: ContenedorConcursantes(
-                      concursantes.nombresConcursantesCoreanas[index],
-                      concursantes.fotosConcursantesCoreanas[index]
-                     
-                      ),
-                  );
-                  
-                } )
-                
-              ,)
-          ),
-        ],),)
+            _devolverEstructura(MediaQuery.of(context).size.width, "Participantes coreanas",  concursantes.nombresConcursantesCoreanas,concursantes.fotosConcursantesCoreanas),
+            _devolverEstructura(MediaQuery.of(context).size.width, "Participantes chinas",  concursantes.nombresConcursantesChinas,concursantes.fotosConcursantesChinas),
+            _devolverEstructura(MediaQuery.of(context).size.width, "Participantes japonesas",  concursantes.nombresConcursantesJaponesas,concursantes.fotosConcursantesJaponesas),
+           
+            
+          ],),
+        ),)
     );
+  }
+
+  Widget _devolverEstructura(double medida, String texto, List<String> nombres, List<String> fotos ){
+    return Expanded(child: Column(
+      children: [
+      Container(
+        color: Colors.white,
+        height: 2,
+        width: medida,
+      ),
+      Container(
+        alignment: Alignment.center,
+        color: Colors.purple,
+        height: 30,
+        width: medida,
+        child: Text(texto, style: GoogleFonts.dancingScript(fontSize: 25, fontWeight: FontWeight.bold)),
+      ),
+      Container(
+        color: Colors.white,
+        height: 2,
+        width: medida,
+      ),
+      Container(
+        alignment: Alignment.center,
+        color: Colors.purple,
+        height: 500,
+        width: medida,
+        child: GridView.count(
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 0.8,
+          crossAxisCount: 3,
+          children: 
+            List.generate(33, (index) {
+                return Center(
+                child: 
+                ContenedorConcursantes(nombres[index],fotos[index]),
+              );
+            } )
+          ,)
+      ),
+    ],));
   }
 }
